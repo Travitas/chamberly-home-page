@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chamberly - Find the Right Legal Professional</title>
+  <meta name="description" content="Discover verified advocates and law professionals, explore their expertise, credentials and professional profiles — all in one trusted platform." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Theme tokens (dark default, same palette as profile page) ===== */
+    :root {
+      --page: #050608;
+      --surface: #0a0c10;
+      --surface-2: #0d1015;
+      --card: #11141a;
+      --card-2: #171b23;
+      --card-3: #181c25;
+      --card-4: #1e232d;
+      --line: #171b23;
+      --line-2: #222836;
+      --line-3: #30384a;
+      --ink: #f5f6f8;
+      --ink-2: #d8dce4;
+      --muted: #9ca3b1;
+      --muted-2: #7d8494;
+      --gold: #e2b04a;
+      --gold-deep: #d4af37;
+      --gold-grad: linear-gradient(90deg,#f3c862,#e2b04a 50%,#c9972f);
+      --gold-grad-h: linear-gradient(90deg,#e2b04a,#d4a03c 50%,#b8871f);
+      --banner: linear-gradient(135deg,#1a2230,#0d1015 70%);
+    }
+    html.light {
+      --page: #ecedf0;
+      --surface: #f7f7f9;
+      --surface-2: #f3f4f7;
+      --card: #ffffff;
+      --card-2: #f1f2f5;
+      --card-3: #eceef2;
+      --card-4: #e6e8ee;
+      --line: #e2e4ea;
+      --line-2: #d0d4dd;
+      --line-3: #bcc1cd;
+      --ink: #121317;
+      --ink-2: #24262e;
+      --muted: #5a5f6c;
+      --muted-2: #6f7482;
+      --gold: #9a7209;
+      --gold-deep: #8a6d12;
+      --banner: linear-gradient(135deg,#dfe3ec,#f3f4f7 70%);
+    }
+
+    body { font-family: "PoppinsNum","Raleway","Plus Jakarta Sans","Inter",system-ui,sans-serif; background: var(--page); color: var(--ink); }
+    .font-logo { font-family: 'Playfair Display', Georgia, serif; }
+    html, body, header, section, div, button, span, a, input { transition: background-color .2s ease, border-color .2s ease, color .2s ease; }
+
+    /* ===== Reusable components ===== */
+    .shell      { background: var(--surface); }
+    .shell-alt  { background: var(--surface-2); }
+    .ink        { color: var(--ink); }
+    .ink-2      { color: var(--ink-2); }
+    .muted      { color: var(--muted); }
+    .muted-2    { color: var(--muted-2); }
+    .gold       { color: var(--gold); }
+    .bd         { border-color: var(--line); }
+    .bd-2       { border-color: var(--line-2); }
+    .card       { background: var(--card); border: 1px solid var(--line-2); }
+    .card-hover:hover { border-color: color-mix(in srgb, var(--gold) 55%, transparent); transform: translateY(-2px); }
+    .card-hover { transition: border-color .2s ease, transform .2s ease, background-color .2s ease; }
+    .chip       { background: var(--card-2); border: 1px solid var(--line-2); color: var(--ink-2); }
+    .icon-box   { background: var(--card-2); border: 1px solid var(--line-2); color: var(--gold); }
+    .btn-gold   { background: var(--gold-grad); color: #000; }
+    .btn-gold:hover { background: var(--gold-grad-h); }
+    html.light .btn-gold { background: linear-gradient(90deg,#e8b94f,#d9a53c 50%,#c08a24); }
+    .btn-ghost  { background: var(--card-3); border: 1px solid var(--line-3); color: var(--ink-2); }
+    .btn-ghost:hover { border-color: color-mix(in srgb, var(--gold) 55%, transparent); }
+    .eyebrow    { color: var(--gold); letter-spacing: .18em; text-transform: uppercase; font-size: 12px; font-weight: 600; }
+    .sec-title  { color: var(--ink); font-weight: 600; letter-spacing: .01em; }
+    .banner     { background: var(--banner); position: relative; overflow: hidden; }
+    .banner::after { content:""; position:absolute; inset:0; background: radial-gradient(circle at 80% 20%, color-mix(in srgb, var(--gold) 22%, transparent), transparent 55%); }
+    .nav-link:hover { color: var(--ink); }
+    .glow       { box-shadow: 0 25px 60px -25px rgba(0,0,0,.65); }
+    html.light .glow { box-shadow: 0 25px 60px -30px rgba(40,50,80,.25); }
+    .step-ring  { background: var(--card-2); border: 1px solid var(--line-3); color: var(--gold); }
+    .avatar     { background: var(--card-4); border: 2px solid var(--gold-deep); color: var(--gold); }
+  </style>
+  <script>
+    try {
+      if (localStorage.getItem('chamberly-theme') === 'light') document.documentElement.classList.add('light');
+    } catch (e) {}
+  </script>
+</head>
+<body class="antialiased min-h-screen">
+
+  <!-- ================= HEADER ================= -->
+  <header class="sticky top-0 z-40 backdrop-blur-md border-b bd" style="background: color-mix(in srgb, var(--surface) 92%, transparent)">
+    <div class="max-w-6xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3 lg:gap-8">
+        <button class="lg:hidden text-lg muted" aria-label="Open menu" onclick="document.getElementById('mobile-nav').classList.toggle('hidden')">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <a href="#" class="flex items-center gap-2">
+          <span class="font-logo font-bold text-2xl lg:text-3xl ink tracking-normal">Chamberly.</span>
+        </a>
+        <nav class="hidden lg:flex items-center gap-6 text-[14px] muted">
+          <a href="#" class="nav-link gold">Find Lawyers</a>
+          <a href="#practice" class="nav-link">Practice Areas</a>
+          <a href="#how" class="nav-link">How It Works</a>
+          <a href="#about" class="nav-link">About</a>
+        </nav>
+      </div>
+      <div class="flex items-center gap-2.5">
+        <button id="theme-toggle" onclick="toggleTheme()" aria-label="Switch between light and dark theme" class="w-8 h-8 rounded-full flex items-center justify-center text-sm cursor-pointer btn-ghost">
+          <i id="theme-icon" class="fa-solid fa-sun"></i>
+        </button>
+        <a href="#" class="hidden sm:inline-flex text-[14px] font-medium muted nav-link px-3 py-1.5">Login</a>
+        <a href="#" class="btn-gold text-[14px] font-semibold px-4 py-2 rounded-xl active:scale-95 transition shadow-md">Join as Advocate</a>
+      </div>
+    </div>
+    <!-- Mobile nav -->
+    <nav id="mobile-nav" class="hidden lg:hidden border-t bd px-4 py-3 space-y-2 text-[14px] muted">
+      <a href="#" class="block py-1.5 gold">Find Lawyers</a>
+      <a href="#practice" class="block py-1.5">Practice Areas</a>
+      <a href="#how" class="block py-1.5">How It Works</a>
+      <a href="#about" class="block py-1.5">About</a>
+      <a href="#" class="block py-1.5">Login</a>
+    </nav>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="shell border-b bd relative overflow-hidden">
+    <div class="absolute -top-24 -right-24 w-[420px] h-[420px] rounded-full opacity-30 blur-3xl pointer-events-none" style="background: radial-gradient(circle, var(--gold), transparent 65%)"></div>
+    <div class="max-w-6xl mx-auto px-4 lg:px-8 py-14 lg:py-24 grid lg:grid-cols-2 gap-12 items-center relative">
+
+      <div>
+        <span class="inline-flex items-center gap-1.5 text-[12px] font-medium px-3 py-1 rounded-full uppercase tracking-wider" style="background:#fbeec3;color:#6b4e08;border:1px solid rgba(226,176,74,.6)">
+          <i class="fa-solid fa-circle-check text-emerald-600 text-[11px]"></i> Verified Legal Professionals
+        </span>
+        <h1 class="font-logo text-[40px] lg:text-[54px] leading-[1.1] mt-5 ink">
+          Find the Right <span class="gold">Legal Professional</span> for Your Needs
+        </h1>
+        <p class="text-[15px] lg:text-[16px] muted leading-relaxed mt-5 max-w-lg">
+          Discover verified advocates and law professionals, explore their expertise, credentials and professional profiles — all in one trusted platform.
+        </p>
+        <div class="flex flex-wrap gap-3 mt-7">
+          <a href="#advocates" class="btn-gold text-[14px] font-semibold px-5 py-3 rounded-xl inline-flex items-center gap-2 active:scale-95 transition shadow-md">
+            Find an Advocate <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+          <a href="#" class="btn-ghost text-[14px] font-semibold px-5 py-3 rounded-xl inline-flex items-center active:scale-95 transition">
+            Create Professional Profile
+          </a>
+        </div>
+        <div class="flex gap-8 mt-9 pt-6 border-t bd max-w-md">
+          <div><div class="text-[22px] font-semibold ink">500+</div><div class="text-[12px] muted-2 mt-0.5">Verified Advocates</div></div>
+          <div><div class="text-[22px] font-semibold ink">50+</div><div class="text-[12px] muted-2 mt-0.5">Practice Areas</div></div>
+          <div><div class="text-[22px] font-semibold ink">1000+</div><div class="text-[12px] muted-2 mt-0.5">Professional Profiles</div></div>
+        </div>
+      </div>
+
+      <!-- Hero profile card -->
+      <div class="card rounded-3xl overflow-hidden glow">
+        <div class="banner h-28 lg:h-32 relative">
+          <span class="absolute top-3 right-3 z-10 text-[11px] font-semibold px-2.5 py-1 rounded-lg flex flex-col items-end leading-tight" style="background:var(--card);border:1px solid var(--line-2);color:var(--ink)">
+            <span class="text-emerald-500"><i class="fa-solid fa-circle-check mr-1"></i>Verified Profile</span>
+            <span class="text-[10px] muted-2 font-normal">Professional credentials verified</span>
+          </span>
+        </div>
+        <div class="px-5 lg:px-6 pb-6 -mt-9 relative z-10">
+          <div class="flex items-end justify-between gap-3">
+            <div class="w-[72px] h-[72px] rounded-2xl card flex items-center justify-center shadow-lg">
+              <span class="font-logo text-4xl gold">C</span>
+            </div>
+            <div class="w-[72px] h-[72px] rounded-xl bg-white p-1.5 border bd-2 flex items-center justify-center text-black text-3xl" aria-label="QR code placeholder">
+              <i class="fa-solid fa-qrcode"></i>
+            </div>
+          </div>
+          <div class="mt-3">
+            <div class="flex items-center gap-1.5">
+              <h3 class="text-[20px] font-semibold ink">Advocate</h3>
+              <i class="fa-solid fa-circle-check text-emerald-500 text-sm"></i>
+            </div>
+            <p class="text-[13px] muted-2">Advocate</p>
+            <p class="text-[13px] muted mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+              <span><i class="fa-solid fa-location-dot gold text-xs mr-1"></i>New Delhi, India</span>
+              <span class="hidden sm:inline muted-2">|</span>
+              <span><i class="fa-solid fa-scale-balanced gold text-xs mr-1"></i>Bar Council of Delhi</span>
+            </p>
+            <div class="flex flex-wrap gap-2 mt-3 text-[12px]">
+              <span class="chip px-2.5 py-1 rounded-lg">Real Estate</span>
+              <span class="chip px-2.5 py-1 rounded-lg">Corporate Law</span>
+              <span class="chip px-2.5 py-1 rounded-lg">NCLT / IBC</span>
+              <span class="chip px-2.5 py-1 rounded-lg">Litigation</span>
+            </div>
+          </div>
+          <div class="grid grid-cols-3 divide-x text-center mt-5 pt-4 border-t bd" style="--tw-divide-opacity:1">
+            <div class="px-1 border-r bd-2"><div class="text-[18px] font-semibold ink">12+</div><div class="text-[11px] muted-2 mt-0.5">Years Experience</div></div>
+            <div class="px-1 border-r bd-2"><div class="text-[18px] font-semibold ink">50+</div><div class="text-[11px] muted-2 mt-0.5">Cases</div></div>
+            <div class="px-1"><div class="text-[18px] font-semibold ink"><i class="fa-solid fa-star gold text-xs mr-1"></i>4.9</div><div class="text-[11px] muted-2 mt-0.5">Professional Rating</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= PRACTICE AREAS ================= -->
+  <section id="practice" class="shell-alt py-16 lg:py-20 border-b bd">
+    <div class="max-w-6xl mx-auto px-4 lg:px-8">
+      <div class="text-center">
+        <div class="eyebrow">Legal Expertise</div>
+        <h2 class="font-logo text-[30px] lg:text-[36px] ink mt-2">Find Lawyers by Practice Area</h2>
+        <p class="text-[14px] lg:text-[15px] muted mt-2">Explore experienced legal professionals across different areas of law.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
+        <a href="#" class="card card-hover rounded-2xl p-5 block">
+          <div class="icon-box w-10 h-10 rounded-xl flex items-center justify-center"><i class="fa-solid fa-scale-balanced text-sm"></i></div>
+          <h3 class="text-[15px] font-semibold ink mt-4">Corporate &amp; Commercial</h3>
+          <p class="text-[13px] muted mt-1.5 leading-relaxed">Business disputes, contracts, company law and commercial matters.</p>
+        </a>
+        <a href="#" class="card card-hover rounded-2xl p-5 block">
+          <div class="icon-box w-10 h-10 rounded-xl flex items-center justify-center"><i class="fa-solid fa-building text-sm"></i></div>
+          <h3 class="text-[15px] font-semibold ink mt-4">Real Estate &amp; RERA</h3>
+          <p class="text-[13px] muted mt-1.5 leading-relaxed">Property disputes, RERA matters, transactions and development.</p>
+        </a>
+        <a href="#" class="card card-hover rounded-2xl p-5 block">
+          <div class="icon-box w-10 h-10 rounded-xl flex items-center justify-center"><i class="fa-solid fa-people-roof text-sm"></i></div>
+          <h3 class="text-[15px] font-semibold ink mt-4">Family Law</h3>
+          <p class="text-[13px] muted mt-1.5 leading-relaxed">Divorce, matrimonial disputes, custody and family matters.</p>
+        </a>
+        <a href="#" class="card card-hover rounded-2xl p-5 block">
+          <div class="icon-box w-10 h-10 rounded-xl flex items-center justify-center"><i class="fa-solid fa-shield-halved text-sm"></i></div>
+          <h3 class="text-[15px] font-semibold ink mt-4">Criminal Law</h3>
+          <p class="text-[13px] muted mt-1.5 leading-relaxed">Criminal defense, bail, investigation and related legal matters.</p>
+        </a>
+        <a href="#" class="card card-hover rounded-2xl p-5 block">
+          <div class="icon-box w-10 h-10 rounded-xl flex items-center justify-center"><i class="fa-solid fa-file-lines text-sm"></i></div>
+          <h3 class="text-[15px] font-semibold ink mt-4">Civil Litigation</h3>
+          <p class="text-[13px] muted mt-1.5 leading-relaxed">Civil disputes, recovery, injunction and litigation matters.</p>
+        </a>
+        <a href="#" class="card card-hover rounded-2xl p-5 block">
+          <div class="icon-box w-10 h-10 rounded-xl flex items-center justify-center"><i class="fa-solid fa-coins text-sm"></i></div>
+          <h3 class="text-[15px] font-semibold ink mt-4">Tax &amp; Finance</h3>
+          <p class="text-[13px] muted mt-1.5 leading-relaxed">Tax disputes, financial regulations and advisory services.</p>
+        </a>
+        <a href="#" class="card card-hover rounded-2xl p-5 block">
+          <div class="icon-box w-10 h-10 rounded-xl flex items-center justify-center"><i class="fa-solid fa-briefcase text-sm"></i></div>
+          <h3 class="text-[15px] font-semibold ink mt-4">Employment Law</h3>
+          <p class="text-[13px] muted mt-1.5 leading-relaxed">Employment disputes, contracts, compliance and workplace matters.</p>
+        </a>
+        <a href="#" class="card card-hover rounded-2xl p-5 block">
+          <div class="icon-box w-10 h-10 rounded-xl flex items-center justify-center"><i class="fa-solid fa-plus text-sm"></i></div>
+          <h3 class="text-[15px] font-semibold ink mt-4">View All Areas</h3>
+          <p class="text-[13px] muted mt-1.5 leading-relaxed">Explore all legal practice areas available on the platform.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FEATURED ADVOCATES ================= -->
+  <section id="advocates" class="shell py-16 lg:py-20 border-b bd">
+    <div class="max-w-6xl mx-auto px-4 lg:px-8">
+      <div class="text-center">
+        <div class="eyebrow">Professionals</div>
+        <h2 class="font-logo text-[30px] lg:text-[36px] ink mt-2">Featured Advocates</h2>
+        <p class="text-[14px] lg:text-[15px] muted mt-2">Connect with legal professionals based on their expertise and experience.</p>
+      </div>
+
+      <!-- Search -->
+      <div class="max-w-2xl mx-auto mt-8">
+        <div class="relative">
+          <input id="adv-search" type="text" oninput="filterAdvocates()" placeholder="Search by name, city, state, expertise, qualification..."
+            class="w-full card rounded-2xl pl-5 pr-12 py-3.5 text-[14px] ink outline-none focus:border-[color:var(--gold)] placeholder:text-[color:var(--muted-2)]" />
+          <i class="fa-solid fa-magnifying-glass absolute right-5 top-1/2 -translate-y-1/2 muted-2 text-sm"></i>
+        </div>
+        <p id="adv-count" class="text-[13px] muted-2 mt-3">Showing 9 of 9 advocates</p>
+      </div>
+
+      <div id="adv-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
+
+        <!-- 1 -->
+        <article class="adv card card-hover rounded-2xl overflow-hidden">
+          <div class="banner h-16"></div>
+          <div class="px-5 pb-5 -mt-8 relative z-10">
+            <div class="flex items-end gap-3">
+              <div class="avatar w-14 h-14 rounded-xl flex items-center justify-center text-lg font-semibold shrink-0"><i class="fa-regular fa-user"></i></div>
+              <div class="pb-0.5 min-w-0">
+                <h3 class="text-[16px] font-semibold ink leading-tight">Advocate Saloni Sharma</h3>
+                <p class="text-[12px] muted-2">Advocate</p>
+              </div>
+            </div>
+            <p class="text-[12px] muted mt-3"><i class="fa-solid fa-location-dot gold text-[11px] mr-1"></i>Lucknow, Uttar Pradesh</p>
+            <div class="flex flex-wrap gap-1.5 mt-2.5 text-[11px]">
+              <span class="chip px-2 py-1 rounded-md">Corporate &amp; Commercial Disputes</span>
+              <span class="chip px-2 py-1 rounded-md">Labour &amp; Employment</span>
+            </div>
+            <p class="text-[14px] ink-2 mt-3.5">Experience: <span class="font-semibold ink">0 years</span></p>
+            <a href="#" class="btn-ghost mt-3 w-full rounded-xl py-2 text-[13px] font-semibold flex items-center justify-center gap-1.5 transition">View Full Profile <i class="fa-solid fa-arrow-right text-[10px] gold"></i></a>
+          </div>
+        </article>
+
+        <!-- 2 -->
+        <article class="adv card card-hover rounded-2xl overflow-hidden">
+          <div class="banner h-16"></div>
+          <div class="px-5 pb-5 -mt-8 relative z-10">
+            <div class="flex items-end gap-3">
+              <div class="avatar w-14 h-14 rounded-xl flex items-center justify-center text-lg font-semibold shrink-0"><i class="fa-regular fa-user"></i></div>
+              <div class="pb-0.5 min-w-0">
+                <h3 class="text-[16px] font-semibold ink leading-tight">Senior Advocate shiv</h3>
+                <p class="text-[12px] muted-2">Senior Advocate</p>
+              </div>
+            </div>
+            <p class="text-[12px] muted mt-3"><i class="fa-solid fa-location-dot gold text-[11px] mr-1"></i>lucknow, Uttar Pradesh</p>
+            <div class="flex flex-wrap gap-1.5 mt-2.5 text-[11px]">
+              <span class="chip px-2 py-1 rounded-md">Civil Law</span>
+              <span class="chip px-2 py-1 rounded-md">Family Law</span>
+              <span class="chip px-2 py-1 rounded-md">Property &amp; Real Estate</span>
+            </div>
+            <p class="text-[14px] ink-2 mt-3.5">Experience: <span class="font-semibold ink">1 years</span></p>
+            <a href="#" class="btn-ghost mt-3 w-full rounded-xl py-2 text-[13px] font-semibold flex items-center justify-center gap-1.5 transition">View Full Profile <i class="fa-solid fa-arrow-right text-[10px] gold"></i></a>
+          </div>
+        </article>
+
+        <!-- 3 -->
+        <article class="adv card card-hover rounded-2xl overflow-hidden">
+          <div class="banner h-16"></div>
+          <div class="px-5 pb-5 -mt-8 relative z-10">
+            <div class="flex items-end gap-3">
+              <div class="avatar w-14 h-14 rounded-xl flex items-center justify-center text-lg font-semibold shrink-0"><i class="fa-regular fa-user"></i></div>
+              <div class="pb-0.5 min-w-0">
+                <h3 class="text-[16px] font-semibold ink leading-tight">Advocate GOVIND KUMAR</h3>
+                <p class="text-[12px] muted-2">Advocate</p>
+              </div>
+            </div>
+            <p class="text-[12px] muted mt-3"><i class="fa-solid fa-location-dot gold text-[11px] mr-1"></i>Lucknow, Uttar Pradesh</p>
+            <div class="flex flex-wrap gap-1.5 mt-2.5 text-[11px]">
+              <span class="chip px-2 py-1 rounded-md">Civil Law</span>
+              <span class="chip px-2 py-1 rounded-md">Corporate &amp; Commercial Disputes</span>
+              <span class="chip px-2 py-1 rounded-md">Consumer Law</span>
+            </div>
+            <p class="text-[14px] ink-2 mt-3.5">Experience: <span class="font-semibold ink">2 years</span></p>
+            <a href="#" class="btn-ghost mt-3 w-full rounded-xl py-2 text-[13px] font-semibold flex items-center justify-center gap-1.5 transition">View Full Profile <i class="fa-solid fa-arrow-right text-[10px] gold"></i></a>
+          </div>
+        </article>
+
+        <!-- 4 -->
+        <article class="adv card card-hover rounded-2xl overflow-hidden">
+          <div class="banner h-16"></div>
+          <div class="px-5 pb-5 -mt-8 relative z-10">
+            <div class="flex items-end gap-3">
+              <div class="avatar w-14 h-14 rounded-xl flex items-center justify-center text-lg font-semibold shrink-0">AM</div>
+              <div class="pb-0.5 min-w-0">
+                <h3 class="text-[16px] font-semibold ink leading-tight">Advocate Adv Anil Massey</h3>
+                <p class="text-[12px] muted-2">Advocate</p>
+              </div>
+            </div>
+            <p class="text-[12px] muted mt-3"><i class="fa-solid fa-location-dot gold text-[11px] mr-1"></i>District Ajmer, Rajasthan</p>
+            <div class="flex flex-wrap gap-1.5 mt-2.5 text-[11px]">
+              <span class="chip px-2 py-1 rounded-md">Civil Law</span>
+              <span class="chip px-2 py-1 rounded-md">Criminal Law</span>
+              <span class="chip px-2 py-1 rounded-md">Family Law</span>
+            </div>
+            <p class="text-[14px] ink-2 mt-3.5">Experience: <span class="font-semibold ink">0 years</span></p>
+            <a href="#" class="btn-ghost mt-3 w-full rounded-xl py-2 text-[13px] font-semibold flex items-center justify-center gap-1.5 transition">View Full Profile <i class="fa-solid fa-arrow-right text-[10px] gold"></i></a>
+          </div>
+        </article>
+
+        <!-- 5 -->
+        <article class="adv card card-hover rounded-2xl overflow-hidden">
+          <div class="banner h-16"></div>
+          <div class="px-5 pb-5 -mt-8 relative z-10">
+            <div class="flex items-end gap-3">
+              <div class="avatar w-14 h-14 rounded-xl flex items-center justify-center text-lg font-semibold shrink-0">VJ</div>
+              <div class="pb-0.5 min-w-0">
+                <h3 class="text-[16px] font-semibold ink leading-tight">Senior Advocate Varun Jain</h3>
+                <p class="text-[12px] muted-2">Senior Advocate</p>
+              </div>
+            </div>
+            <p class="text-[12px] muted mt-3"><i class="fa-solid fa-location-dot gold text-[11px] mr-1"></i>DELHI, Delhi</p>
+            <div class="flex flex-wrap gap-1.5 mt-2.5 text-[11px]">
+              <span class="chip px-2 py-1 rounded-md">Corporate &amp; Commercial Disputes</span>
+              <span class="chip px-2 py-1 rounded-md">RERA</span>
+              <span class="chip px-2 py-1 rounded-md">NCLT / IBC</span>
+            </div>
+            <p class="text-[14px] ink-2 mt-3.5">Experience: <span class="font-semibold ink">14 years</span></p>
+            <a href="#" class="btn-ghost mt-3 w-full rounded-xl py-2 text-[13px] font-semibold flex items-center justify-center gap-1.5 transition">View Full Profile <i class="fa-solid fa-arrow-right text-[10px] gold"></i></a>
+          </div>
+        </article>
+
+        <!-- 6 -->
+        <article class="adv card card-hover rounded-2xl overflow-hidden">
+          <div class="banner h-16"></div>
+          <div class="px-5 pb-5 -mt-8 relative z-10">
+            <div class="flex items-end gap-3">
+              <div class="avatar w-14 h-14 rounded-xl flex items-center justify-center shrink-0"><span class="font-logo text-2xl">C</span></div>
+              <div class="pb-0.5 min-w-0">
+                <h3 class="text-[16px] font-semibold ink leading-tight">Advocate Gentle Innovation Technology</h3>
+                <p class="text-[12px] muted-2">Advocate</p>
+              </div>
+            </div>
+            <p class="text-[12px] muted mt-3"><i class="fa-solid fa-location-dot gold text-[11px] mr-1"></i>Lucknow, Uttar Pradesh</p>
+            <div class="flex flex-wrap gap-1.5 mt-2.5 text-[11px]">
+              <span class="chip px-2 py-1 rounded-md">Civil Law</span>
+            </div>
+            <p class="text-[14px] ink-2 mt-3.5">Experience: <span class="font-semibold ink">20 years</span></p>
+            <a href="#" class="btn-ghost mt-3 w-full rounded-xl py-2 text-[13px] font-semibold flex items-center justify-center gap-1.5 transition">View Full Profile <i class="fa-solid fa-arrow-right text-[10px] gold"></i></a>
+          </div>
+        </article>
+
+        <!-- 7 -->
+        <article class="adv card card-hover rounded-2xl overflow-hidden">
+          <div class="banner h-16"></div>
+          <div class="px-5 pb-5 -mt-8 relative z-10">
+            <div class="flex items-end gap-3">
+              <div class="avatar w-14 h-14 rounded-xl flex items-center justify-center shrink-0"><i class="fa-regular fa-user"></i></div>
+              <div class="pb-0.5 min-w-0">
+                <h3 class="text-[16px] font-semibold ink leading-tight">Advocate GOVIND KUMAR</h3>
+                <p class="text-[12px] muted-2">Advocate</p>
+              </div>
+            </div>
+            <p class="text-[12px] muted mt-3"><i class="fa-solid fa-location-dot gold text-[11px] mr-1"></i>Lucknow, Uttar Pradesh</p>
+            <div class="flex flex-wrap gap-1.5 mt-2.5 text-[11px]">
+              <span class="chip px-2 py-1 rounded-md">Civil Law</span>
+            </div>
+            <p class="text-[14px] ink-2 mt-3.5">Experience: <span class="font-semibold ink">3 years</span></p>
+            <a href="#" class="btn-ghost mt-3 w-full rounded-xl py-2 text-[13px] font-semibold flex items-center justify-center gap-1.5 transition">View Full Profile <i class="fa-solid fa-arrow-right text-[10px] gold"></i></a>
+          </div>
+        </article>
+
+        <!-- 8 -->
+        <article class="adv card card-hover rounded-2xl overflow-hidden">
+          <div class="banner h-16"></div>
+          <div class="px-5 pb-5 -mt-8 relative z-10">
+            <div class="flex items-end gap-3">
+              <div class="avatar w-14 h-14 rounded-xl flex items-center justify-center text-lg font-semibold shrink-0">TE</div>
+              <div class="pb-0.5 min-w-0">
+                <h3 class="text-[16px] font-semibold ink leading-tight">Advocate tethhh</h3>
+                <p class="text-[12px] muted-2">Advocate</p>
+              </div>
+            </div>
+            <p class="text-[12px] muted mt-3"><i class="fa-solid fa-location-dot gold text-[11px] mr-1"></i>Lucknow, Uttar Pradesh</p>
+            <div class="flex flex-wrap gap-1.5 mt-2.5 text-[11px]">
+              <span class="chip px-2 py-1 rounded-md">Civil Law</span>
+              <span class="chip px-2 py-1 rounded-md">Criminal Law</span>
+              <span class="chip px-2 py-1 rounded-md">Family Law</span>
+            </div>
+            <p class="text-[14px] ink-2 mt-3.5">Experience: <span class="font-semibold ink">3 years</span></p>
+            <a href="#" class="btn-ghost mt-3 w-full rounded-xl py-2 text-[13px] font-semibold flex items-center justify-center gap-1.5 transition">View Full Profile <i class="fa-solid fa-arrow-right text-[10px] gold"></i></a>
+          </div>
+        </article>
+
+        <!-- 9 -->
+        <article class="adv card card-hover rounded-2xl overflow-hidden">
+          <div class="banner h-16"></div>
+          <div class="px-5 pb-5 -mt-8 relative z-10">
+            <div class="flex items-end gap-3">
+              <div class="avatar w-14 h-14 rounded-xl flex items-center justify-center text-lg font-semibold shrink-0">TE</div>
+              <div class="pb-0.5 min-w-0">
+                <h3 class="text-[16px] font-semibold ink leading-tight">Advocate test</h3>
+                <p class="text-[12px] muted-2">Advocate</p>
+              </div>
+            </div>
+            <p class="text-[12px] muted mt-3"><i class="fa-solid fa-location-dot gold text-[11px] mr-1"></i>Location not provided</p>
+            <div class="flex flex-wrap gap-1.5 mt-2.5 text-[11px]">
+              <span class="chip px-2 py-1 rounded-md">Legal Services</span>
+            </div>
+            <p class="text-[14px] ink-2 mt-3.5">Experience: <span class="font-semibold ink">0 years</span></p>
+            <a href="#" class="btn-ghost mt-3 w-full rounded-xl py-2 text-[13px] font-semibold flex items-center justify-center gap-1.5 transition">View Full Profile <i class="fa-solid fa-arrow-right text-[10px] gold"></i></a>
+          </div>
+        </article>
+
+      </div>
+      <p id="adv-empty" class="hidden text-center text-[14px] muted mt-8">No advocates match your search.</p>
+    </div>
+  </section>
+
+  <!-- ================= HOW IT WORKS ================= -->
+  <section id="how" class="shell-alt py-16 lg:py-20 border-b bd">
+    <div class="max-w-6xl mx-auto px-4 lg:px-8">
+      <div class="text-center">
+        <div class="eyebrow">Simple Process</div>
+        <h2 class="font-logo text-[30px] lg:text-[36px] ink mt-2">How Chamberly Works</h2>
+        <p class="text-[14px] lg:text-[15px] muted mt-2">Finding the right legal professional is simple and transparent.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-12 relative">
+        <div class="text-center px-2">
+          <div class="step-ring w-14 h-14 rounded-full mx-auto flex items-center justify-center text-[16px] font-semibold">01</div>
+          <h3 class="text-[15px] font-semibold ink mt-4">Search</h3>
+          <p class="text-[13px] muted mt-1.5 leading-relaxed">Search advocates by name, practice area or location.</p>
+        </div>
+        <div class="text-center px-2">
+          <div class="step-ring w-14 h-14 rounded-full mx-auto flex items-center justify-center text-[16px] font-semibold">02</div>
+          <h3 class="text-[15px] font-semibold ink mt-4">Explore Profile</h3>
+          <p class="text-[13px] muted mt-1.5 leading-relaxed">Review experience, credentials, practice areas and publications.</p>
+        </div>
+        <div class="text-center px-2">
+          <div class="step-ring w-14 h-14 rounded-full mx-auto flex items-center justify-center text-[16px] font-semibold">03</div>
+          <h3 class="text-[15px] font-semibold ink mt-4">Connect</h3>
+          <p class="text-[13px] muted mt-1.5 leading-relaxed">Contact the advocate through phone, email or message.</p>
+        </div>
+        <div class="text-center px-2">
+          <div class="step-ring w-14 h-14 rounded-full mx-auto flex items-center justify-center text-[16px] font-semibold">04</div>
+          <h3 class="text-[15px] font-semibold ink mt-4">Get Legal Assistance</h3>
+          <p class="text-[13px] muted mt-1.5 leading-relaxed">Discuss your legal requirements directly with the professional.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOR LEGAL PROFESSIONALS ================= -->
+  <section id="about" class="shell py-16 lg:py-20">
+    <div class="max-w-6xl mx-auto px-4 lg:px-8 grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+
+      <div class="banner rounded-3xl min-h-[300px] lg:min-h-[380px] flex items-center justify-center text-center p-8 border bd-2 glow">
+        <div class="relative z-10">
+          <i class="fa-solid fa-scale-balanced text-4xl gold"></i>
+          <h3 class="font-logo text-[26px] lg:text-[30px] ink mt-4">Your Professional Legal Identity</h3>
+        </div>
+      </div>
+
+      <div>
+        <div class="eyebrow">For Legal Professionals</div>
+        <h2 class="font-logo text-[30px] lg:text-[36px] ink mt-2 leading-tight">Build Your Digital Professional Presence</h2>
+        <p class="text-[14px] lg:text-[15px] muted mt-3 leading-relaxed">Create a verified digital profile that showcases your professional experience, credentials and expertise.</p>
+
+        <div class="mt-6 space-y-4">
+          <div class="flex items-start gap-3.5">
+            <div class="icon-box w-10 h-10 rounded-xl flex items-center justify-center shrink-0"><i class="fa-solid fa-circle-check text-sm"></i></div>
+            <div>
+              <div class="text-[14px] lg:text-[15px] font-semibold ink">Verified Professional Profile</div>
+              <div class="text-[13px] muted mt-0.5">Showcase your qualifications, Bar Council enrollment and professional experience.</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-3.5">
+            <div class="icon-box w-10 h-10 rounded-xl flex items-center justify-center shrink-0"><i class="fa-solid fa-qrcode text-sm"></i></div>
+            <div>
+              <div class="text-[14px] lg:text-[15px] font-semibold ink">Personal QR Code</div>
+              <div class="text-[13px] muted mt-0.5">Share your professional profile instantly using your unique QR code.</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-3.5">
+            <div class="icon-box w-10 h-10 rounded-xl flex items-center justify-center shrink-0"><i class="fa-solid fa-share-nodes text-sm"></i></div>
+            <div>
+              <div class="text-[14px] lg:text-[15px] font-semibold ink">Share Your Digital Profile</div>
+              <div class="text-[13px] muted mt-0.5">Share your profile through WhatsApp, LinkedIn, email or your website.</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-3.5">
+            <div class="icon-box w-10 h-10 rounded-xl flex items-center justify-center shrink-0"><i class="fa-regular fa-address-card text-sm"></i></div>
+            <div>
+              <div class="text-[14px] lg:text-[15px] font-semibold ink">Download vCard</div>
+              <div class="text-[13px] muted mt-0.5">Allow clients and professional contacts to save your details easily.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <section class="shell-alt border-y bd py-16 lg:py-20 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--gold) 18%, transparent), transparent 60%)"></div>
+    <div class="max-w-3xl mx-auto px-4 text-center relative">
+      <h2 class="font-logo text-[30px] lg:text-[38px] ink">Are You a Legal Professional?</h2>
+      <p class="text-[14px] lg:text-[15px] muted mt-3 leading-relaxed">Create your professional digital profile, showcase your expertise and make it easier for clients and professional contacts to discover and connect with you.</p>
+      <a href="#" class="btn-gold inline-flex items-center gap-2 mt-7 text-[14px] font-semibold px-6 py-3 rounded-xl active:scale-95 transition shadow-md">
+        Create Your Advocate Profile <i class="fa-solid fa-arrow-right text-xs"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="shell">
+    <div class="max-w-6xl mx-auto px-4 lg:px-8 pt-14 pb-8">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div>
+          <span class="font-logo font-bold text-2xl ink">Chamberly.</span>
+          <p class="text-[13px] muted mt-3 leading-relaxed max-w-xs">A professional digital platform connecting clients with verified advocates and helping legal professionals build their digital identity.</p>
+        </div>
+        <div>
+          <h4 class="text-[14px] font-semibold ink">Platform</h4>
+          <ul class="mt-3 space-y-2 text-[13px] muted">
+            <li><a href="#advocates" class="nav-link">Find Advocates</a></li>
+            <li><a href="#" class="nav-link">Law Firms</a></li>
+            <li><a href="#practice" class="nav-link">Practice Areas</a></li>
+            <li><a href="#" class="nav-link">Knowledge Hub</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-[14px] font-semibold ink">Professionals</h4>
+          <ul class="mt-3 space-y-2 text-[13px] muted">
+            <li><a href="#" class="nav-link">Join as Advocate</a></li>
+            <li><a href="#" class="nav-link">Login</a></li>
+            <li><a href="#" class="nav-link">Digital Profile</a></li>
+            <li><a href="#" class="nav-link">QR Profile</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-[14px] font-semibold ink">Support</h4>
+          <ul class="mt-3 space-y-2 text-[13px] muted">
+            <li><a href="#" class="nav-link">About Us</a></li>
+            <li><a href="#" class="nav-link">Contact</a></li>
+            <li><a href="#" class="nav-link">Privacy Policy</a></li>
+            <li><a href="#" class="nav-link">Terms &amp; Conditions</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-10 pt-5 border-t bd flex flex-col sm:flex-row items-center justify-between gap-2 text-[12px] muted-2">
+        <span>© 2026 Chamberly. All rights reserved.</span>
+        <span>Verified Advocates. Trusted by Professionals.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function updateThemeIcon() {
+      const icon = document.getElementById('theme-icon');
+      const isLight = document.documentElement.classList.contains('light');
+      icon.className = isLight ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+    }
+    function toggleTheme() {
+      const root = document.documentElement;
+      root.classList.toggle('light');
+      try { localStorage.setItem('chamberly-theme', root.classList.contains('light') ? 'light' : 'dark'); } catch (e) {}
+      updateThemeIcon();
+    }
+    updateThemeIcon();
+
+    function filterAdvocates() {
+      const q = document.getElementById('adv-search').value.trim().toLowerCase();
+      const cards = document.querySelectorAll('#adv-grid .adv');
+      let shown = 0;
+      cards.forEach(c => {
+        const match = !q || c.textContent.toLowerCase().includes(q);
+        c.classList.toggle('hidden', !match);
+        if (match) shown++;
+      });
+      document.getElementById('adv-count').textContent = 'Showing ' + shown + ' of ' + cards.length + ' advocates';
+      document.getElementById('adv-empty').classList.toggle('hidden', shown !== 0);
+    }
+  </script>
+</body>
+</html>
